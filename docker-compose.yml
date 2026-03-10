@@ -1,39 +1,34 @@
-version: '3'
-
 services:
 
   ms-security:
     build: ms-security
-    mem_limit: 512m
     ports:
-      - "8080:8080"
+      - "8080:8080"  # backend accesible desde EC2:8080
     environment:
-      DB_HOST: ms_secur
-      DB_URL: jdbc:mysql://ms_secur:3306/ms-security?createDatabaseIfNotExist=true&serverTimezone=UTC
+      DB_HOST: ms-secur
+      DB_URL: jdbc:mysql://ms-secur:3306/ms-security?createDatabaseIfNotExist=true&serverTimezone=UTC
       DB_USER_NAME: root
       DB_PASSWORD: 123456789
-    restart: always
     depends_on:
-      ms_secur:
+      ms-secur:
         condition: service_healthy
 
-  ms_secur:
+  ms-secur:
     image: mysql:8.0.33
     ports:
-      - "3307:3306"
+      - "3307:3306"  # solo para pruebas, no recomendable exponer a internet
     environment:
       MYSQL_ROOT_PASSWORD: 123456789
       MYSQL_PASSWORD: 123456789
       MYSQL_DATABASE: ms-security
-    restart: always
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 10s
       retries: 10
 
   ms-frontend:
-    build: ./ng-crud-card   # ruta de tu proyecto Angular
+    build: ./ng-crud-card
     ports:
-      - "4200:80"            # 80 si usas Nginx para producción
+      - "80:80"       # Angular servirá por Nginx en puerto 80
     depends_on:
-      - ms-security    
+      - ms-security
