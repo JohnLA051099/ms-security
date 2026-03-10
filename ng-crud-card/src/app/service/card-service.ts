@@ -13,18 +13,18 @@ export class CardService {
   }
 
 getCards(): Observable<CardModel[]> {
-  return this.httpClient.get<CardModel[]>('http://localhost:8080/api/v1/card/list');
+  return this.httpClient.get<CardModel[]>('http://3.147.237.197:8080/api/v1/card/list');
 }
 
 saveCard(request: any): Observable<any> {
-  return this.httpClient.post<any>('http://localhost:8080/api/v1/card/save', request);
+  return this.httpClient.post<any>('http://3.147.237.197:8080/api/v1/card/save', request);
 }
   
   updateCard(request: any): Observable<any>{
-  return this.httpClient.post<any>('http://localhost:8080/api/v1/card' + '/update', request).pipe(map(res => res));
+  return this.httpClient.post<any>('http://3.147.237.197:8080/api/v1/card' + '/update', request).pipe(map(res => res));
 }
 
   deleteCard(id: number): Observable<any>{
-  return this.httpClient.get<any>('http://localhost:8080/api/v1/card' + '/delete/' + id).pipe(map(res => res));
+  return this.httpClient.get<any>('http://3.147.237.197:8080/api/v1/card' + '/delete/' + id).pipe(map(res => res));
 }
 }
