@@ -29,6 +29,6 @@ services:
   ms-frontend:
     build: ./ng-crud-card
     ports:
-      - "80:80"       # Angular servirá por Nginx en puerto 80
+      - "4200:80"       # Angular servirá por Nginx en puerto 80
     depends_on:
       - ms-security
