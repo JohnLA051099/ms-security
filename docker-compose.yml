@@ -30,3 +30,10 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 10s
       retries: 10
+
+  ms-frontend:
+    build: ./ng-crud-card   # ruta de tu proyecto Angular
+    ports:
+      - "4200:80"            # 80 si usas Nginx para producción
+    depends_on:
+      - ms-security    
